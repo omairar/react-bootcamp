@@ -1,0 +1,225 @@
+<html>
+    <head>
+        <title> React elements </title>
+        <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    </head>
+
+
+
+>
+    
+
+    <body>
+
+        <h1>EG TEST </h1>
+
+        <div id="app">
+
+        </div>
+
+        <script type="text/babel">
+
+            
+
+
+            function ActiveFrindList (props) {
+                return (
+                    <div>
+                        <h2> Active List </h2>
+                        <ul>
+                            {
+                                props.list.map((friend) => (
+                                    <li key={friend.name}>
+                                        <span> {friend.name}</span>
+                                        <button onClick = { () => props.onRemoveFriend(friend.name)}> remove </button>
+                                        <button onClick = { () => props.ontOGGLE(friend.name)}> inactivate </button>
+                                    </li>
+                                ))
+
+                            }
+                        </ul>
+                    </div>
+                    
+                )
+                
+            }
+
+            function InActiveFrindList (props) {
+                return (
+                    <div>
+                        <h2> Inactive List </h2>
+                        <ul>
+                            {
+                                props.list.map((friend) => (
+                                    <li key={friend.name}>
+                                        <span> {friend.name}</span>
+                                        <button onClick = { () => props.ontOGGLE(friend.name)}> activate </button>
+                                    </li>
+                                ))
+
+                            }
+                        </ul>
+                    </div>
+                )
+                
+            }
+
+
+            
+
+            class App extends React.Component {
+
+                constructor(props){
+                    super(props)
+
+                    this.state = {
+                        friends : [
+
+                            {
+                                name:'omair',
+                                active: true
+                            },
+                            {
+                                name:'arqum',
+                                active: true
+                            },
+                            {
+                                name:'asif',
+                                active: false
+                            },
+                            {
+                                name:'faisal',
+                                active: false
+                            }
+                            
+                        ],
+
+                        input : '💩 💩'
+                    }
+
+
+                    //using javascript property DotBIND in order to force this.setState to point towadrs app class not on {{props.}}
+
+                    this.handleRemoveFriend = this.handleRemoveFriend.bind(this)
+
+                    this.updateInput = this.updateInput.bind(this)
+
+                    this.handleAddFreind = this.handleAddFreind.bind(this)
+
+                    this.handleToggle = this.handleToggle.bind(this)
+                }
+
+                handleAddFreind(){
+
+                    //not modify the state directly thus not using PUSH
+
+                    this.setState((currentState) => {
+                        return{
+                            friends : currentState.friends.concat([{
+                                name: currentState.input,
+                                active: true
+                            }]),
+                            input:''
+                        }
+                        
+                    })
+                }
+
+                handleRemoveFriend(name){
+
+                    //mutating old state not modifying old state
+                    this.setState((currentState) => {
+                        return {
+                            friends : currentState.friends.filter((friend) => friend.name !== name)
+                        }
+                    })
+                }
+
+                handleToggle(name){
+                    this.setState((currentState) => {
+
+                        //finding the friend
+                        let targetedFriend = currentState.friends.find((friend) => friend.name === name)
+
+                   //     targetedFriend.active = !targetedFriend.active
+                        
+                        console.log(targetedFriend)
+                        return{
+                            friends : currentState.friends
+                                        .filter((friend) => friend.name !== name)
+                                        .concat({
+                                            name , 
+                                            active: !targetedFriend.active
+                                        })
+                                        
+                        }
+
+                        
+                    })
+
+
+                    
+                }
+
+                updateInput(e){
+
+                    const value = e.target.value;
+
+                    this.setState({
+                        input : value
+                    })
+
+                }
+
+                render() {
+                    
+                    // controlled component: - if state of imput is controlled by react 
+
+                    return(
+                        <div id="container">
+
+                                                        
+                            <input
+                                type="text"
+                                placeholder = "enter friend name"
+                                value = {this.state.input}
+                                onChange = {this.updateInput}
+                            />
+                            <button onClick={this.handleAddFreind}>Submit</button> 
+                            <br/>
+                            <button onClick={() => {
+                                this.setState({
+                                    friends:[]
+                                })
+                            }}>clear all</button>
+                            <ActiveFrindList 
+                                list={this.state.friends.filter((friend) => friend.active === true)}
+                                onRemoveFriend = {this.handleRemoveFriend}
+                                ontOGGLE = {this.handleToggle}
+                                
+                            />
+                            <InActiveFrindList 
+                                list={this.state.friends.filter((friend) => friend.active === false)} 
+                                ontOGGLE = {this.handleToggle}
+                            />
+                        </div>
+                    ) 
+                }
+
+                
+                    
+            }
+            
+
+         
+
+            ReactDOM.render(
+                <App/>,
+                document.getElementById('app')
+            )
+        </script>
+    </body>
+</html>

@@ -1,0 +1,74 @@
+<html>
+    <head>
+        <title> React elements </title>
+        <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    </head>
+    <body>
+
+        <h1>Class Components & State & Constructor & Super </h1>
+
+        <div id="app">
+
+        </div>
+
+        <script type="text/babel">
+
+            
+
+
+            function FrindList (props) {
+                return (
+                    <ul>
+                        {
+                            props.list.map((name) => (
+                                <li key={name}>
+                                    {name}
+                                </li>
+                            ))
+
+                        }
+                    </ul>
+                )
+                
+            }
+
+
+            
+
+            class App extends React.Component {
+
+                constructor(props){
+                    super(props)
+
+                    this.state = {
+                        friends : ['omair', 'asif', 'arqum', 'faisal']
+                    }
+                }
+
+                render() {
+                    
+
+                    return(
+                        <div id="container">
+                            <FrindList list={this.state.friends} />
+                        </div>
+                    ) 
+                }
+
+                
+                    
+            }
+            
+
+         
+
+            ReactDOM.render(
+                <App/>,
+                document.getElementById('app')
+            )
+        </script>
+    </body>
+</html>

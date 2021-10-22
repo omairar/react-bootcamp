@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <title> React elements </title>
+        <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    </head>
+    <body>
+
+        <h1> Component Introduction with props</h1>
+
+        <div id="app">
+
+        </div>
+
+        <script>
+
+            const name = 'omair'
+            const phone = '901349'
+
+
+            function NameComponent (props) {
+                return React.createElement(
+                    'h1',
+                    null,
+                    props.name
+                )
+            }
+
+
+            function PhoneComponent (props) {
+                return React.createElement(
+                    'h1',
+                    null,
+                    props.phone
+                )
+            }
+
+
+            
+
+           
+            const wrapperElement = React.createElement(
+                'div',
+                {id: 'contanier'},
+                React.createElement(NameComponent, {name: 'Omair'} ),
+                React.createElement(PhoneComponent, {phone: '901340'} ),
+               
+            )
+
+            ReactDOM.render(
+                wrapperElement,
+                document.getElementById('app')
+            )
+        </script>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <title> React elements </title>
+        <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    </head>
+    <body>
+
+        <h1> JSX Intro</h1>
+
+        <div id="app">
+
+        </div>
+
+        <script type="text/babel">
+
+            const name = 'omair'
+            const phone = '901349'
+
+
+            function NameComponent (props) {
+                return <h1> {props.name } </h1>
+                
+            }
+
+
+            function PhoneComponent (props) {
+                return <h2> {props.phone } </h2>
+            }
+
+            function App () {
+                return(
+                    <div id="container">
+                        <NameComponent name={name}/>
+                        <PhoneComponent phone = {phone}/> 
+                    </div>
+                ) 
+                    
+            }
+            
+
+         
+
+            ReactDOM.render(
+                <App/>,
+                document.getElementById('app')
+            )
+        </script>
+    </body>
+</html>
